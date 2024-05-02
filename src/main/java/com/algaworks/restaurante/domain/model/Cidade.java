@@ -1,10 +1,17 @@
 package com.algaworks.restaurante.domain.model;
 
+import com.algaworks.restaurante.Groups;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,9 +24,14 @@ public class Cidade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
+	
+	@NotBlank
 	private String nome;
 	
 	@ManyToOne
+	@NotNull
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
 	private Estado estado;
 
 }
